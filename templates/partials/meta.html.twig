@@ -1,21 +1,27 @@
-{# Affichez les pays cliquables #}
-{% if beer.country %}
-	<ul>
-		<li>
-			Country :
+
+
+{% set normals = normal(beer) %}
+{% set specials = special(beer) %}
+<div >				
+	<div class="btn">
+	{% if normals %}
+	<p class="text-muted">Categorie normale :</p>
+		{% for category in normals %}
+			<p class="btn btn-sm btn-outline-secondary flex">{{category.name}}</p>
+		{% endfor %}
+	{% endif %}
+	{% if normals %}
+	<p class="text-muted">Categorie speciale:</p>
+		{% for category in specials %}
+			<p class="btn btn-sm btn-outline-secondary flex">{{category.name}}</p>
+		{% endfor %}
+	{% endif %}
+	</div>
+	<p class="text-muted">Country :
 			<a href="{{ path('show_country_beer', { id : beer.country.id })}}">
 				{{beer.country.name}}
-			</a>
-		</li>
-	</ul>
-{% endif %}
-{% if beer.categories %}
-	<ul>
-		<li>
-			Categories :
-			{% for category in beer.categories %}
-				<li>{{category.name}}</li>
-			{% endfor %}
-		</li>
-	</ul>
-{% endif %}
+			</a>	
+	</p>		
+</div>
+					
+
