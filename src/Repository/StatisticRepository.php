@@ -38,11 +38,11 @@ class StatisticRepository extends ServiceEntityRepository
       public function totalBeersByClient(int $id) {
 
         return $this->createQueryBuilder('s')
-            ->select('sum(s.totalBeers) as total')
-            ->join('s.client', 'c')
-            ->andWhere("s.client =:id")
+            ->select('sum(c.number_beer) as total')
+            ->join('s.client_id', 'c')
+            ->andWhere("s.client_id =:id")
             ->setParameter('id', $id)
-            ->groupBy('s.client')
+            ->groupBy('s.client_id')
             ->getQuery()
             ->getOneOrNullResult();
     } 

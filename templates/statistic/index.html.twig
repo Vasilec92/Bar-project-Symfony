@@ -12,11 +12,11 @@
     <h1>{{title}}</h1>
     <table class="table">
         <thead>
-            <tr>
-            
+            <tr>           
             <th scope="col">Name</th>
             <th scope="col">Beer</th>
             <th scope="col">Price</th>
+            <th scope="col">Number beer</th>
             </tr>
         </thead>
         <tbody>
@@ -25,9 +25,33 @@
                 <td>{{el.clientId.name}}</td>
                 <td>{{el.beerId.name}}</td>
                 <td>{{el.beerId.price}}</td>
-                
+                <td>{{el.clientId.numberBeer}}</td>
             </tr>
-            {% endfor %}           
+            {% endfor %} 
+            </table>
+        <table class="table">
+        <h1>Number beer par personne</h1>
+        <thead>
+            <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">weight</th>
+            <th scope="col">Total beers</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+                <tr>
+                    <th scope="row">{{ client.id }}</th>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.weight }}</td>
+                    
+                    <td>{{ totalBeers(client.id) }}</td>
+                </tr>
+                {% endfor %}          
          </tbody>
+        
 </div>
 {% endblock %}
