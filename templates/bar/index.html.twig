@@ -5,6 +5,9 @@
 {% block body %}
 <div class="album py-5 bg-light">
     <div class="container">
+	  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<p>Bonjour {{ app.user.email }}</p>
+	  {% endif %}
 	 <h1>{{ title }}</h1>
 	 <div class="row">
 	 {% for beer in beers %}
@@ -13,7 +16,7 @@
 					<img src="{{ asset('build/images/beer_00.jpeg')  }}"  class="bd-placeholder-img card-img-top" width="100%" height="225"/>
 					<div class="card-body">
 					<a href="#">{{ beer.name }}</a>
-					{% if beer.publisheAt is defined %}
+							{% if beer.publisheAt is defined %}
 								<p class="card-text">Date de création :
 									{{ beer.publisheAt | date('d-m-Y h:m:s') }}
 								</p>
@@ -25,9 +28,8 @@
 							{% endif %}
 							<div class="card-text">
 								{{ beer.description ?? 'no description' }}
-							</div>
-					
-				{% include 'partials/meta.html.twig' %}
+							</div>					
+						{% include 'partials/meta.html.twig' %}
 					</div>
 				</div>
 		
