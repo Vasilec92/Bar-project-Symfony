@@ -49,9 +49,17 @@ class Beer
      */
     private $price;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="beer")
+     */
+    private $user;
+
+    
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->user = new ArrayCollection();
+    
     }
 
     public function getId(): ?int
@@ -146,4 +154,35 @@ class Beer
 
         return $this;
     }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(Like $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->setBeer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Like $user): self
+    {
+        if ($this->user->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getBeer() === $this) {
+                $user->setBeer(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

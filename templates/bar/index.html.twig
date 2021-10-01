@@ -9,7 +9,24 @@
 	 <div class="row">
 	 {% for beer in beers %}
 	    <div class="col-sm-3">
-			<div class="card shadow-sm">        
+			<div class="card shadow-sm">      
+			  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+				{% set stylecss = 'filter: brightness(0.6); ' %}
+				{% for like in likes %}
+				
+				{% if beer.id == like.beer.id %}
+					{% set stylecss = '' %}
+				{% endif %}
+
+			    
+			 	{% endfor %}
+			
+		
+                   <a class="nav-link" style="text-align:center; position: absolute; {{ stylecss }}" aria-current="page" href="{{path('home_like', { id : beer.id })}}"><img src="{{ asset('build/images/logoLikeBeer.png')  }}"   width="50px" style='' /></a>
+		
+        	{% else %}
+                   
+    		{% endif %}  
 					<img src="{{ asset('build/images/beer_00.jpeg')  }}"  class="bd-placeholder-img card-img-top" width="100%" height="225"/>
 					<div class="card-body">
 					<a href="#">{{ beer.name }}</a>

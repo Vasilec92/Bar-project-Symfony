@@ -25,6 +25,7 @@ class UserFixtures extends Fixture
                         'admin'
                     ));
         $user->setEmail("admin@admin.fr");
+        $user->setRoles(['ROLE_USER']);
         
         $manager->persist($user);
         $manager->flush();
