@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Twig;
-
+use App\Entity\Statistic;
 use App\Entity\Beer;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -34,6 +34,10 @@ class Custom extends AbstractExtension
             new TwigFunction('special', function (Beer $beer) {
                 // on fait une requête from scratch directement dans le repository Beer
                 return $this->manager->getRepository(Beer::class)->findByCatTerm('special', $beer->getId());
+            }),
+            new TwigFunction('totalBeers', function($id) {
+            $totalBeers = $this->manager->getRepository(Statistic::class)->totalBeersByClient($id);
+            return $totalBeers['total'] ?? 0;
             }),
             new TwigFunction('normal', function (Beer $beer) {
                 return $this->manager->getRepository(Beer::class)->findByCatTerm('normal', $beer->getId());

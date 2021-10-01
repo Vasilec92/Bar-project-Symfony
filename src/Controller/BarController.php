@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Beer;
 use App\Entity\Country;
+use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,4 +37,30 @@ class BarController extends AbstractController
           'title' => $country->getName()
         ]);
     }
+
+     /**
+     * @Route("/category/{id}", name="show_beer_category")
+     */
+    public function category(Category $category){
+
+        return $this->render('category/index.html.twig', [
+            'beers' => $category->getBeers() ?? [],
+            'title' => $category->getName()
+        ]);
+    }
+
+    /**
+     * @Route("/menu", name="menu")
+     */
+    public function mainMenu(string $routeName, int $catId = null): Response
+    {
+        // on fait une instance de Doctrine 
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findBy(['term' => 'normal']);
+
+        return $this->render('partials/menu.html.twig', [
+            'route_name' => $routeName,
+            'category_id' => $catId,
+            'categories' => $categories
+        ]);
+    }    
 }
